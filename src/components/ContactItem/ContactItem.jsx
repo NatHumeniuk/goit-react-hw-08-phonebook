@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
+import { deleteContact } from 'store/operations';
+import {
+  selectIsLoading,
+  selectVisibleContacts,
+} from 'store/contacts/contactSlise.selectors';
 
 import css from '../ContactItem/ContactItem.module.css';
-import { deleteContact } from 'store/operations';
-import { selectVisibleContacts } from 'store/selectors';
-import { toast } from 'react-toastify';
 
 export const ContactItem = () => {
   const contacts = useSelector(selectVisibleContacts);
   const dispatch = useDispatch();
-  const [isDeleting, setIsDeleting] = useState(false);
+  const isLoading = useSelector(selectIsLoading);
 
   const handleDeleteContact = contactId => {
-    setIsDeleting(true);
-
     dispatch(deleteContact(contactId))
-      .then(() => {})
-      .catch(error => {
-        toast.error(`Error: ${error.message}`);
-      })
-      .finally(() => {
-        setIsDeleting(false);
-      });
+      .unwrap()
+      .then(toast.success(`Contact was deleted!`));
   };
 
   return (
@@ -30,11 +26,11 @@ export const ContactItem = () => {
         <li key={contact.id} className={css.contactField}>
           <p className={css.contact}>
             {contact.name}:&nbsp;
-            <span className={css.phoneNumber}>{contact.phone}</span>
+            <span className={css.phoneNumber}>{contact.number}</span>
             <button
               className={css.addContactBtn}
               onClick={() => handleDeleteContact(contact.id)}
-              disabled={isDeleting}
+              disabled={isLoading}
             >
               Delete
             </button>

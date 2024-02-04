@@ -1,36 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { addContact } from 'store/operations';
+import {
+  selectContacts,
+  selectIsLoading,
+} from 'store/contacts/contactSlise.selectors';
 
 import css from '../AddContactForm/AddContactForm.module.css';
-import { addContact } from 'store/operations';
 
 export const AddContactForm = () => {
   const dispatch = useDispatch();
-
-  const [isAdding, setIsAdding] = useState(false);
+  const contacts = useSelector(selectContacts);
+  const isLoading = useSelector(selectIsLoading);
 
   const handleFormSubmit = event => {
     event.preventDefault();
-    setIsAdding(true);
+
     const contactName = event.target.elements.contactName.value;
     const phoneNumber = event.target.elements.phoneNumber.value;
 
     const contactData = {
       name: contactName,
-      phone: phoneNumber,
+      number: phoneNumber,
     };
 
-    dispatch(addContact(contactData))
-      .then(() => {
-        event.target.reset();
-      })
-      .catch(error => {
-        toast.error(`Error: ${error.message}`);
-      })
-      .finally(() => {
-        setIsAdding(false);
-      });
+    const checkDuplicate = contactName => {
+      return contacts.some(contact => contact.name === contactName);
+    };
+    if (!checkDuplicate(contactData.name)) {
+      dispatch(addContact(contactData))
+        .unwrap()
+        .then(contactData => {
+          toast.success(`${contactData.name} was successfully added!`);
+        });
+      event.target.reset();
+    } else {
+      toast.error(`${contactData.name} is already in contacts!`);
+    }
   };
 
   return (
@@ -57,8 +65,8 @@ export const AddContactForm = () => {
         />
       </label>
 
-      <button type="submit" className={css.submitBtn} disabled={isAdding}>
-        {isAdding ? 'Adding...' : 'Add Contact'}
+      <button type="submit" className={css.submitBtn} disabled={isLoading}>
+        {isLoading ? 'Adding...' : 'Add Contact'}
       </button>
     </form>
   );

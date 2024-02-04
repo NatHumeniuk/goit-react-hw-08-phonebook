@@ -1,43 +1,60 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectError, selectIsLoading } from 'store/selectors';
-import { ToastContainer } from 'react-toastify';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
 import 'react-toastify/dist/ReactToastify.css';
 
-import { AddContactForm, ContactList, Filter } from 'components';
+import SharedLayout from './SharedLayout/SharedLayout';
 
-import css from './App.module.css';
+import { Loader } from './Loader/Loader';
+import { apiRefreshUser } from 'store/operations';
+import RestrictedRoute from './RestrictedRoute/RestrictedRoute';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
 
-import { fetchContacts } from 'store/operations';
+const Home = lazy(() => import('../pages/Home'));
+const RegisterPage = lazy(() => import('pages/RegisterPage'));
+const LoginPage = lazy(() => import('pages/LoginPage'));
+const ContactsPage = lazy(() => import('pages/ConatctsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(apiRefreshUser());
   }, [dispatch]);
 
   return (
-    <div>
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <h1 className={css.mainTitle}>Phonebook</h1>
-      <AddContactForm />
-      <h2 className={css.contactsTitle}>Contacts</h2>
-      <Filter />
-      {isLoading && !error && <p>Request in progress...</p>}
-      <ContactList />
-    </div>
+    <SharedLayout>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute>
+                <RegisterPage />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute>
+                <LoginPage />
+              </RestrictedRoute>
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute>
+                <ContactsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </Suspense>
+    </SharedLayout>
   );
 };
