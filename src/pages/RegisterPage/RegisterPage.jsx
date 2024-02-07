@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { apiRegisterUser } from 'store/operations';
 
+import css from './RegisterPage.module.css';
+
 const RegisterPage = () => {
   const dispatch = useDispatch();
 
@@ -20,30 +22,32 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <h1>RegisterPage</h1>
+    <div className={css.wrapper}>
+      <h2 className={css.title}>Create Your Account</h2>
 
-      <form onSubmit={onSubmit}>
-        <label>
+      <form onSubmit={onSubmit} className={css.form}>
+        <label className={css.label}>
           Name:
           <input
             type="text"
             name="userName"
-            placeholder="userName"
+            placeholder="Jane"
             minLength={2}
             required
+            className={css.input}
           />
         </label>
-        <label>
+        <label className={css.label}>
           Email:
           <input
             type="email"
             name="userEmail"
-            placeholder="userName123@gmail.ua"
+            placeholder="Jane123@gmail.ua"
             required
+            className={css.input}
           />
         </label>
-        <label>
+        <label className={css.label}>
           Password:
           <input
             type="password"
@@ -51,9 +55,12 @@ const RegisterPage = () => {
             placeholder="*******"
             minLength={7}
             required
+            className={css.input}
           />
         </label>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className={css.formBtn}>
+          Sign Up
+        </button>
       </form>
     </div>
   );

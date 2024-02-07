@@ -1,0 +1,13 @@
+.wrapperContacts {
+  display: flex;
+}
+
+.contactList {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 20px;
+  padding: 0;
+  margin: 20px 0;
+  list-style: none;
+}

@@ -1,0 +1,48 @@
+.container {
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  background-color: #1073d0;
+  color: white;
+  padding: 20px 20px;
+  width: 100vw;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+.title {
+  color: #333;
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  margin-top: 50px;
+  text-transform: uppercase;
+  letter-spacing: 1.5;
+  background: -webkit-linear-gradient(left, #007bff, #881798);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+main {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
+    ),
+    url('/src/units/background.webp');
+  background-size: cover;
+
+  height: 100vw;
+  flex-grow: 1;
+  padding: 130px 20px 0;
+}

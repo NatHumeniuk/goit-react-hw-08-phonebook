@@ -1,20 +1,18 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import 'react-toastify/dist/ReactToastify.css';
 
 import SharedLayout from './SharedLayout/SharedLayout';
-
 import { Loader } from './Loader/Loader';
 import { apiRefreshUser } from 'store/operations';
 import RestrictedRoute from './RestrictedRoute/RestrictedRoute';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 
-const Home = lazy(() => import('../pages/Home'));
-const RegisterPage = lazy(() => import('pages/RegisterPage'));
-const LoginPage = lazy(() => import('pages/LoginPage'));
-const ContactsPage = lazy(() => import('pages/ConatctsPage'));
+const Home = lazy(() => import('../pages/Home/HomePage'));
+const RegisterPage = lazy(() => import('pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('pages/LoginPage/LoginPage'));
+const ContactsPage = lazy(() => import('pages/ConatctsPage/ConatctsPage'));
 
 export const App = () => {
   const dispatch = useDispatch();

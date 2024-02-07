@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { apiLoginUser } from 'store/operations';
 
+import css from './LoginPage.module.css';
+
 const LoginPage = () => {
   const dispatch = useDispatch();
 
@@ -19,20 +21,21 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <h1>LoginPage</h1>
+    <div className={css.wrapper}>
+      <h2 className={css.title}>Welcome Back!</h2>
 
-      <form onSubmit={onSubmit}>
-        <label>
+      <form onSubmit={onSubmit} className={css.form}>
+        <label className={css.label}>
           Email:
           <input
             type="email"
             name="userEmail"
-            placeholder="kirito228@hotmail.ua"
+            placeholder="Jane123@gmail.ua"
             required
+            className={css.input}
           />
         </label>
-        <label>
+        <label className={css.label}>
           Password:
           <input
             type="password"
@@ -40,9 +43,12 @@ const LoginPage = () => {
             placeholder="**********"
             minLength={7}
             required
+            className={css.input}
           />
         </label>
-        <button type="submit">Sign In</button>
+        <button type="submit" className={css.formBtn}>
+          Sign In
+        </button>
       </form>
     </div>
   );

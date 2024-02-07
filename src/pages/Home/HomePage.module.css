@@ -1,0 +1,44 @@
+.title {
+  color: #333;
+  font-weight: 900;
+  font-size: 62px;
+  text-align: center;
+  margin-top: 200px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: -webkit-linear-gradient(left, #007bff, #881798);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  border-right: 4px solid #000;
+  animation: cursor 1s infinite step-end, typing 10s steps(20);
+  white-space: nowrap;
+  overflow: hidden;
+}
+@keyframes cursor {
+  0%,
+  100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #000;
+  }
+}
+
+@keyframes typing {
+  0% {
+    width: 0%;
+  }
+  25% {
+    width: 25%;
+  }
+  50% {
+    width: 50%;
+  }
+  75% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
+}

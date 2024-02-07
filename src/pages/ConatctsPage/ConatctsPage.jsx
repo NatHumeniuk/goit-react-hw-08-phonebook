@@ -9,7 +9,7 @@ import {
 } from 'store/contacts/contactSlise.selectors';
 import { Loader } from 'components/Loader/Loader';
 
-import css from '../components/App.module.css';
+import css from './ContactsPage.module.css';
 
 import { fetchContacts } from 'store/operations';
 
@@ -23,14 +23,18 @@ const ConatctsPage = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1 className={css.mainTitle}>Phonebook</h1>
-      <AddContactForm />
-      <h2 className={css.contactsTitle}>Contacts</h2>
-      <Filter />
-      {isLoading && <Loader />}
-      {error && toast('Something went wrong.')}
-      <ContactList />
+    <div className={css.wrapper}>
+      <div className={css.formWrap}>
+        <h2 className={css.title}>Add contacts:</h2>
+        <AddContactForm />
+      </div>
+      <div>
+        <h2 className={css.contactsTitle}>My Contacts</h2>
+        <Filter />
+        {isLoading && <Loader />}
+        {error && toast('Something went wrong.')}
+        <ContactList />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
+import { MdFaceUnlock } from 'react-icons/md';
+import { FiPhoneCall } from 'react-icons/fi';
+
 import { deleteContact } from 'store/operations';
 import {
   selectIsLoading,
@@ -24,17 +27,23 @@ export const ContactItem = () => {
     <>
       {contacts?.map(contact => (
         <li key={contact.id} className={css.contactField}>
-          <p className={css.contact}>
-            {contact.name}:&nbsp;
-            <span className={css.phoneNumber}>{contact.number}</span>
-            <button
-              className={css.addContactBtn}
-              onClick={() => handleDeleteContact(contact.id)}
-              disabled={isLoading}
-            >
-              Delete
-            </button>
-          </p>
+          <div className={css.nameWrap}>
+            <MdFaceUnlock className={css.iconPerson} />
+            <p className={css.contact}>{contact.name}</p>
+          </div>
+          <div className={css.phoneWrap}>
+            <FiPhoneCall className={css.iconPhone} />
+            <a className={css.phoneNumber} href={`tel:${contact.number}`}>
+              {contact.number}
+            </a>
+          </div>
+          <button
+            className={css.deleteBtn}
+            onClick={() => handleDeleteContact(contact.id)}
+            disabled={isLoading}
+          >
+            Delete
+          </button>
         </li>
       ))}
     </>
