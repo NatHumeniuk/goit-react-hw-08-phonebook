@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'store/operations';
 import {
   selectContacts,
-  selectIsLoading,
+  selectIsAdding,
 } from 'store/contacts/contactSlise.selectors';
 
 import css from '../AddContactForm/AddContactForm.module.css';
@@ -13,7 +13,7 @@ import css from '../AddContactForm/AddContactForm.module.css';
 export const AddContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
+  const isLAdding = useSelector(selectIsAdding);
 
   const handleFormSubmit = event => {
     event.preventDefault();
@@ -66,8 +66,8 @@ export const AddContactForm = () => {
           />
         </label>
 
-        <button type="submit" className={css.submitBtn} disabled={isLoading}>
-          {isLoading ? 'Adding...' : 'Add Contact'}
+        <button type="submit" className={css.submitBtn} disabled={isLAdding}>
+          {isLAdding ? 'Adding...' : 'Add Contact'}
         </button>
       </form>
     </div>

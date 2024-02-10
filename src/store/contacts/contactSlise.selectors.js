@@ -3,6 +3,8 @@ import { createSelector } from '@reduxjs/toolkit';
 export const selectContacts = state => state.contactsScope.contacts;
 
 export const selectIsLoading = state => state.contactsScope.isLoading;
+export const selectIsAdding = state => state.contactsScope.isAdding;
+export const selectIsDeleting = state => state.contactsScope.iisDeleting;
 
 export const selectError = state => state.contactsScope.error;
 

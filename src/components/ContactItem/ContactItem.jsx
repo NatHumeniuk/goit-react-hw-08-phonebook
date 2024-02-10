@@ -6,7 +6,7 @@ import { FiPhoneCall } from 'react-icons/fi';
 
 import { deleteContact } from 'store/operations';
 import {
-  selectIsLoading,
+  selectIsDeleting,
   selectVisibleContacts,
 } from 'store/contacts/contactSlise.selectors';
 
@@ -15,7 +15,7 @@ import css from '../ContactItem/ContactItem.module.css';
 export const ContactItem = () => {
   const contacts = useSelector(selectVisibleContacts);
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
+  const isDeleting = useSelector(selectIsDeleting);
 
   const handleDeleteContact = contactId => {
     dispatch(deleteContact(contactId))
@@ -40,7 +40,7 @@ export const ContactItem = () => {
           <button
             className={css.deleteBtn}
             onClick={() => handleDeleteContact(contact.id)}
-            disabled={isLoading}
+            disabled={isDeleting}
           >
             Delete
           </button>

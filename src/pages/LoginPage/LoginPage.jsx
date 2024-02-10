@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { apiLoginUser } from 'store/operations';
 
 import css from './LoginPage.module.css';
@@ -7,7 +8,7 @@ import css from './LoginPage.module.css';
 const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     const email = e.currentTarget.elements.userEmail.value;
     const password = e.currentTarget.elements.userPassword.value;
@@ -17,7 +18,12 @@ const LoginPage = () => {
       password,
     };
 
-    dispatch(apiLoginUser(formData));
+    try {
+      await dispatch(apiLoginUser(formData)).unwrap();
+      toast.success('Logged in successfully!');
+    } catch (error) {
+      toast.error(`Login failed: ${error.message}`);
+    }
   };
 
   return (

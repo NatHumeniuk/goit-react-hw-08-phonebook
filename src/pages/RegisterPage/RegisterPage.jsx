@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { apiRegisterUser } from 'store/operations';
 
 import css from './RegisterPage.module.css';
@@ -7,7 +8,7 @@ import css from './RegisterPage.module.css';
 const RegisterPage = () => {
   const dispatch = useDispatch();
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
     const name = e.currentTarget.elements.userName.value;
     const email = e.currentTarget.elements.userEmail.value;
@@ -18,7 +19,13 @@ const RegisterPage = () => {
       email,
       password,
     };
-    dispatch(apiRegisterUser(formData));
+
+    try {
+      await dispatch(apiRegisterUser(formData)).unwrap();
+      toast.success('Registration is successful!');
+    } catch (error) {
+      toast.error(`Registration failed: ${error.message}`);
+    }
   };
 
   return (
